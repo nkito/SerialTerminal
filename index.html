@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Serial Terminal</title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="connectToolBar" class="toolbar">
+        <div id="electronPortArea" class="electron-only hidden">
+          <label>
+            ポート
+            <select id="portSelect" style="width:150px;"></select>
+          </label>
+          <button id="refreshPortsBtn">一覧更新</button>
+        </div>
+
+        <label>
+          通信速度
+          <select id="baudRate">
+            <option>300</option>
+            <option>1200</option>
+            <option>2400</option>
+            <option>4800</option>
+            <option>9600</option>
+            <option>19200</option>
+            <option>38400</option>
+            <option>57600</option>
+            <option selected>115200</option>
+            <option>230400</option>
+            <option>460800</option>
+            <option>921600</option>
+          </select> bps
+        </label>
+
+        <button id="connectBtn">接続</button>
+        <button id="disconnectBtn" disabled>切断</button>
+      </div>
+
+      <div id="delayToolBar" class="toolbar">
+        <label>
+          文字間遅延
+          <input id="charDelay" type="number" min="0" step="1" value="0" style="width:45px;" />ms
+        </label>
+
+        <label>
+          改行後遅延
+          <input id="newlineDelay" type="number" min="0" step="1" value="0" style="width:45px;" />ms
+        </label>
+
+        <button id="resetBtn">端末リセット</button>
+        <button id="clearBtn">画面クリア</button>
+      </div>
+
+      <div id="terminal-wrapper">
+        <div id="terminal"></div>
+      </div>
+    </div>
+    <dialog id="custom-char-delay-dialog" class="modal">
+      <form method="dialog">
+        <h3 id="custom-char-delay-dialog-title">文字間遅延時間</h3>
+        <p id="custom-char-delay-dialog-description" style="margin: 8px 0 12px; font-size: 14px;">文字間の遅延時間[ms]を入力してください（例: 15）</p>
+        
+        <input 
+          type="number" 
+          id="custom-char-delay-dialog-input" 
+          style="width: 100%; padding: 8px; font-size: 16px;"
+          autocomplete="off"
+          autofocus
+        >
+        
+        <div style="margin-top: 20px; text-align: right; display: flex; gap: 8px; justify-content: flex-end;">
+          <button type="button" id="custom-char-delay-dialog-cancel" style="padding: 8px 16px;">キャンセル</button>
+          <button type="submit" id="custom-char-delay-dialog-ok" style="padding: 8px 16px; background: #007aff; color: white;">OK</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="custom-newline-delay-dialog" class="modal">
+      <form method="dialog">
+        <h3 id="custom-newline-delay-dialog-title">改行後の遅延時間</h3>
+        <p id="custom-newline-delay-dialog-description" style="margin: 8px 0 12px; font-size: 14px;">改行後の遅延時間[ms]を入力してください</p>
+        
+        <input 
+          type="number" 
+          id="custom-newline-delay-dialog-input" 
+          style="width: 100%; padding: 8px; font-size: 16px;"
+          autocomplete="off"
+          autofocus
+        >
+        
+        <div style="margin-top: 20px; text-align: right; display: flex; gap: 8px; justify-content: flex-end;">
+          <button type="button" id="custom-newline-delay-dialog-cancel" style="padding: 8px 16px;">キャンセル</button>
+          <button type="submit" id="custom-newline-delay-dialog-ok" style="padding: 8px 16px; background: #007aff; color: white;">OK</button>
+        </div>
+      </form>
+    </dialog>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

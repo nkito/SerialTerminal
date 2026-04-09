@@ -1,0 +1,124 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;       /* スクロールバーを防止 */
+  background: #ffffff;
+  color: #030303;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 8px;
+  gap: 8px;         /* 要素間の余白をgapで管理 */
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;  /* 必要に応じて横スクロールを許可 */
+  gap: 5px 5px;
+  align-items: center;
+  /*margin-bottom: 10px;*/
+  height: 35px;
+  flex-shrink: 0;    /* 高さを固定して縮まないように */
+}
+
+.toolbar label {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.toolbar input,
+.toolbar select,
+.toolbar button {
+  font-size: 14px;
+  padding: 4px 4px;
+}
+
+.hint {
+  margin-bottom: 10px;
+  color: #030303;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+#terminal-wrapper {
+  border: 1px solid #444;
+  background: #2D2E2C;
+  padding: 6px;
+  border-radius:4px;
+  width: 100%;
+  flex: 1;                      /* 残りの高さを全部取る */
+  display: flex;                /* 子要素の#terminalに高さを正しく伝える */
+  min-height: 0;
+}
+
+#terminal {
+  width: 100%;
+  height: 100%;
+  flex: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.electron-only {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/*
+.xterm {
+  padding-right: 2px; 
+}
+*/
+
+.xterm-viewport.xterm-viewport {
+    scrollbar-width: thin;
+}
+.xterm-viewport::-webkit-scrollbar {
+    width: 10px;
+}
+.xterm-viewport::-webkit-scrollbar-track {
+    opacity: 0;
+}
+.xterm-viewport::-webkit-scrollbar-thumb {
+    min-height: 20px;
+    background-color: #ffffff20;
+}
+/*
+.xterm-viewport::-webkit-scrollbar-thumb {
+  min-height: 40px;
+  background-color: #ffffff20;
+}
+*/
+
+dialog.modal {
+  width: 380px;
+  padding: 24px;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  background: #2d2e2c;
+  color: #eee;
+}
+
+dialog.modal::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+dialog.modal button {
+  font-size: 14px;
+  cursor: pointer;
+}
