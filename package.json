@@ -33,7 +33,8 @@
     "win": {
       "target": [
         "nsis"
-      ]
+      ],
+      "icon": "icon/serialterm.png"
     },
     "nsis": {
       "oneClick": false,
