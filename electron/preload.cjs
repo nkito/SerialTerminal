@@ -59,6 +59,7 @@ contextBridge.exposeInMainWorld('electronSerial', {
     ipcRenderer.send('menu:set-custom-newline-delay', value);
   },
 
+  encodeText: (text, encoding) => ipcRenderer.invoke('text-encoding:encode-text', text, encoding),
   onTextEncodingChange: (callback) => {
     ipcRenderer.on('text-encoding:change', (_event, value) => callback(value));
   },

@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('path');
 const { SerialPort } = require('serialport');
+var iconv = require('iconv-lite');
 
 const windows = new Set();           // ウィンドウ管理
 const windowPorts = new Map();       // webContents.id → SerialPort（各ウィンドウごとに独立）
@@ -271,6 +272,23 @@ function setTextEncodingValue(focusedWindow, newValue) {
     win.webContents.send('text-encoding:change', newValue);
   }
 }
+
+// Rendererからテキストエンコードのリクエストを受けるハンドラー
+ipcMain.handle('text-encoding:encode-text', async (event, text, encoding) => {
+  switch (encoding) {
+    case "utf-8":
+      return Buffer.from(text, 'utf8');
+
+    case "shift-jis":
+      return iconv.encode(text, 'shift_jis');
+
+    case "euc-jp":
+      return iconv.encode(text, 'euc-jp');
+
+    default:
+      return Buffer.from(text, 'utf8');  // デフォルトはUTF-8
+  }
+});
 
 // buildAppMenu() の下あたりに追加
 ipcMain.on('terminal:context-menu', (event, hasSelection) => {

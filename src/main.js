@@ -88,19 +88,6 @@ function getNewlineDelay() {
   return Math.max(0, Number(el.newlineDelay.value) || 0);
 }
 
-function bytesToLatin1String(bytes) {
-  const CHUNK = 0x8000;
-  let result = '';
-  for (let i = 0; i < bytes.length; i += CHUNK) {
-    result += String.fromCharCode(...bytes.subarray(i, i + CHUNK));
-  }
-  return result;
-}
-
-function encodeText(text) {
-  return new TextEncoder().encode(text);
-}
-
 function setUiConnected(connected) {
   el.connectBtn.disabled = connected;
   el.disconnectBtn.disabled = !connected;
@@ -255,6 +242,7 @@ const transport = isElectron
   : new WebSerialTransport();
 
 let decoder = new TextDecoder("utf-8");
+let currentTextEncoding = "utf-8";
 
 transport.onData((bytes) => {
   term.write( decoder.decode(bytes, { stream: true }) );
@@ -363,7 +351,7 @@ term.onData(async (data) => {
   if (!isConnected) return;
   const localEcho = await window.electronSerial.getLocalEcho();
   if ( localEcho ) term.write(data);
-  const bytes = encodeText(data);
+  const bytes = await window.electronSerial.encodeText(data, currentTextEncoding);
   enqueueSendBytes(bytes);
 });
 
@@ -570,6 +558,7 @@ async function adjustWindowSize() {
     window.electronSerial.onTextEncodingChange((value) => {
       term.writeln(`\r\n[情報] テキストエンコーディングが ${value} に変更されました`);
       decoder = new TextDecoder(value);
+      currentTextEncoding = value;
     });
 
     /*
