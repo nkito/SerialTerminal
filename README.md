@@ -7,7 +7,7 @@
 <img src="img/SerialTermSixel.png" width="350px"> <img src="img/SerialTermESC.png" width="350px">
 
 ## 使い方
-1. [Releases](https://github.com/nkito/serial-terminal/releases) から適切なバージョンをダウンロードしてください。
+1. [Releases](https://github.com/nkito/SerialTerminal/releases) から適切なバージョンをダウンロードしてください。
 2. ダウンロードしたファイルを解凍し、アプリケーションを起動してください。
 3. シリアルポートを選択し、ボーレートを設定して接続してください。
 
