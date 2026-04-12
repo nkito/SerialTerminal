@@ -349,6 +349,9 @@ async function disconnect() {
  * --------------------------------- */
 term.onData(async (data) => {
   if (!isConnected) return;
+  if (data === '\x7f') {
+    data = '\x08'; // バックスペースは BS に変換
+  }
   const localEcho = await window.electronSerial.getLocalEcho();
   if ( localEcho ) term.write(data);
   const bytes = await window.electronSerial.encodeText(data, currentTextEncoding);
