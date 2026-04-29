@@ -72,6 +72,7 @@ const imageAddon = new ImageAddon({
 term.loadAddon(fitAddon);
 term.loadAddon(imageAddon);
 term.open(el.terminal);
+term.focus();
 
 /* ---------------------------------
  * utility
@@ -327,6 +328,7 @@ async function connect() {
     term.writeln(`\r\n[接続] Web Serial / ${baudRate}bps`);
   }
 
+  term.focus();
   isConnected = true;
   setUiConnected(true);
 }
