@@ -260,6 +260,12 @@ async function writeBytesWithDelay(bytes, signal = null) {
   const charDelay = getCharDelay();
   const newlineDelay = getNewlineDelay();
 
+  if( charDelay === 0 && newlineDelay === 0 ){
+    // 遅延なしならまとめて送る
+    await transport.write(bytes);
+    return;
+  }
+
   for (const b of bytes) {
     await transport.write(new Uint8Array([b]));
 
