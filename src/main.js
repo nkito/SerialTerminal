@@ -261,8 +261,17 @@ async function writeBytesWithDelay(bytes, signal = null) {
   const newlineDelay = getNewlineDelay();
 
   if( charDelay === 0 && newlineDelay === 0 ){
-    // 遅延なしならまとめて送る
-    await transport.write(bytes);
+    // 遅延なしならチャンク単位でまとめて送る
+    const CHUNK_SIZE = 1024; // 1KBずつ送る
+
+    for (let i = 0; i < bytes.length; i += CHUNK_SIZE) {
+      if (signal?.aborted) {
+        throw new DOMException('送信がキャンセルされました', 'AbortError');
+      }
+
+      const chunk = bytes.slice(i, i + CHUNK_SIZE);
+      await transport.write(chunk);
+    }
     return;
   }
 
